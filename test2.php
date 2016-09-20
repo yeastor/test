@@ -52,15 +52,15 @@ function tree($arr){
     return $data;
 }
 
-function flat ($array, &$final,$a = "")
+function flat ($arr, &$result,$a = "")
 {
-    foreach ($array as $key => $val)
+    foreach ($arr as $key => $val)
     {
-        if (is_array($array[$key])){
-            flat($array[$key], $final,$a.".".$key);
+        if (is_array($arr[$key])){
+            flat($arr[$key], $result,$a.".".$key);
         }
         else {
-            $final[ltrim($a.".".$key,'.')] = $array[$key];
+            $result[ltrim($a.".".$key,'.')] = $arr[$key];
         }
     }
     $a = "";
