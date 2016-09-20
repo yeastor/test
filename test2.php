@@ -34,3 +34,40 @@ $data = [
         ]
     ],
 ];
+
+function tree($arr){
+    $data = array();
+
+    foreach($arr as $curent_key => $v){
+        $a = &$data;
+        $keys = array_flip(explode(".",$curent_key));
+        $a = &$keys;
+        foreach($a as $key => $val){
+            $a[$key] = array_splice($a,1,count($a));
+            $a =&$a[$key];
+        }
+        $a = $v;
+        $data = array_merge_recursive($data, $keys);
+    }
+    return $data;
+}
+
+function flat ($array, &$final,$a = "")
+{
+    foreach ($array as $key => $val)
+    {
+        if (is_array($array[$key])){
+            flat($array[$key], $final,$a.".".$key);
+        }
+        else {
+            $final[ltrim($a.".".$key,'.')] = $array[$key];
+        }
+    }
+    $a = "";
+    return $a;
+}
+$data = tree($data1);
+print_r($data);
+flat($data,$data1);
+print_r($data1);
+
